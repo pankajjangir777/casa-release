@@ -17,6 +17,7 @@
       width: 45%;
       margin: auto;
       margin-top: 93px;
+      margin-bottom: 20px;
     }
 
     .casaName {
@@ -39,6 +40,7 @@
     .casaMonkey {
       float: right;
       margin-top: -5rem;
+      height: 160px;
     }
 
     .releaseHeading {
@@ -47,6 +49,42 @@
       color: #4B286D;
       font-family: system-ui;
       font-weight: 200;
+    }
+
+    .subHeading {
+      font-size: 28px;
+      line-height: 52px;
+      color: #4B286D;
+      font-family: system-ui;
+      font-weight: 200;
+      letter-spacing: 1.1px;
+    }
+
+    .mailContent {
+      width: 540px;
+      height: 72px;
+      left: 0px;
+      top: 60px;
+      font-family: system-ui;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.61px;
+      color: #2A2C2E;
+      flex: none;
+      order: 1;
+      flex-grow: 0;
+      margin: 24px 0px;
+      font-weight: 300;
+    }
+    .casa-button{
+      border: none;
+    padding: 13px;
+    background: none rgb(43, 128, 0);
+    color: white;
+    font-family: system-ui;
+    font-weight: 300;
+    border-radius: 4px;
+    letter-spacing: 1px;
     }
   </style>
   <script type="text/javascript" src="helper.js"></script>
@@ -109,11 +147,20 @@
         <img class="casaLogo" src="https://pankajjangir777.github.io/casa-release/images/casaHome.jpg" alt="casa-home">
         <img class="casaName" src="https://pankajjangir777.github.io/casa-release/images/Casa.png" alt="casa-home">
         <hr class="casaDivider">
-        <img class="casaMonkey" src="https://pankajjangir777.github.io/casa-release/images/casaReleaseMonkey.svg"
+        <img class="casaMonkey" src="https://pankajjangir777.github.io/casa-release/images/Monkey_watering_Plant_m.png"
           alt="casa-home">
-        <div class="releaseHeading">CASA Release</div>
-        <div class="releaseHeading" contenteditable="true" id="releaseDate">Nov 15, 2021</div>
-        <input type="button" value="save my edits" onclick="sendEmail()" />
+        <div style="margin-bottom: 6rem;">
+          <div class="releaseHeading">CASA Release</div>
+          <div class="releaseHeading" contenteditable="true" id="releaseDate">Nov 15, 2021</div>
+        </div>
+        <div class="subHeading" contenteditable="true" id="emailPerson">
+          Hi Darrell Wong,
+        </div>
+        <div class="mailContent" contenteditable="true" id="emailPerson">
+          Next production release is planned for Nov 15 to migrate casa case Management to OSV 4 .This release will be
+          after business hours due to planned outage for casa case management.
+        </div>
+        <input type="button" class="casa-button" value="Send Email" onclick="sendEmail()" />
       </div>
     </div>
 </body>
