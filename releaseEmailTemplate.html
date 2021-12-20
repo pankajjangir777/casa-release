@@ -38,10 +38,9 @@
     }
 
     .casaMonkey {
-      float: right;
       margin-top: -5rem;
       height: 160px;
-      position: static;
+      margin-left: 18rem;
     }
 
     .releaseHeading {
@@ -77,15 +76,22 @@
       margin: 24px 0px;
       font-weight: 300;
     }
-    .casa-button{
+
+    .casa-button {
       border: none;
-    padding: 13px;
-    background: none rgb(43, 128, 0);
-    color: white;
-    font-family: system-ui;
-    font-weight: 300;
-    border-radius: 4px;
-    letter-spacing: 1px;
+      padding: 13px;
+      background: none rgb(43, 128, 0);
+      color: white;
+      font-family: system-ui;
+      font-weight: 300;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
     }
   </style>
   <script type="text/javascript" src="helper.js"></script>
@@ -151,7 +157,7 @@
         <img class="casaMonkey" src="https://pankajjangir777.github.io/casa-release/images/Monkey_watering_Plant_m.png"
           alt="casa-home">
         <div style="margin-bottom: 6rem;">
-          <div class="releaseHeading">CASA Release</div>
+          <div class="releaseHeading" style="margin-top: -5rem;">CASA Release</div>
           <div class="releaseHeading" contenteditable="true" id="releaseDate">Nov 15, 2021</div>
         </div>
         <div class="subHeading" contenteditable="true" id="emailPerson">
