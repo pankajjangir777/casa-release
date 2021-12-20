@@ -2,12 +2,73 @@
 <html>
 
 <head>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="helper.js"></script>
+  <!-- <script src="https://smtpjs.com/v3/smtp.js"></script> -->
+  <script type="text/javascript">
+    var Email = {
+      send: function (a) {
+        return new Promise(function (n, e) {
+          a.nocache = Math.floor(1e6 * Math.random() + 1), a.Action = "Send";
+          var t = JSON.stringify(a);
+          Email.ajaxPost("https://smtpjs.com/v3/smtpjs.aspx?", t, function (e) {
+            n(e)
+          })
+        })
+      },
+      ajaxPost: function (e, n, t) {
+        var a = Email.createCORSRequest("POST", e);
+        a.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), a.onload = function () {
+          var e = a.responseText;
+          null != t && t(e)
+        }, a.send(n)
+      },
+      ajax: function (e, n) {
+        var t = Email.createCORSRequest("GET", e);
+        t.onload = function () {
+          var e = t.responseText;
+          null != n && n(e)
+        }, t.send()
+      },
+      createCORSRequest: function (e, n) {
+        var t = new XMLHttpRequest;
+        return "withCredentials" in t ? t.open(e, n, !0) : "undefined" != typeof XDomainRequest ? (t = new XDomainRequest).open(e, n) : t = null, t
+      }
+    };
+    function sendEmail() {
+      console.log(document.documentElement.innerHTML)
+      Email.send({
+        Host: "smtp.gmail.com",
+        Username: "rahulsharrrmaa@gmail.com",
+        Password: "gztdrwqdgjzrurac",
+        To: 'pankajjangir17@gmail.com',
+        From: "rahulsharrrmaa@gmail.com",
+        Subject: "testing",
+        Body: document.documentElement.innerHTML,
+      })
+        .then(function (message) {
+          alert("mail sent successfully",message)
+        });
+    }
+  </script>
+  <link href="//db.onlinewebfonts.com/c/e65fda9e567e2bb65eafa8c223d013df?family=HelveticaNeueLT+Std+UltLt+Cn"
+    rel="stylesheet" type="text/css" />
   <title>CASA Release</title>
 </head>
 
 <body>
-  <h1>Casa Release</h1>
-  <p>Hi Darrell Wong,</p>
+  <div class="outer">
+    <div class="inner">
+      <div>
+        <img class="casaLogo" src="images/casaHome.jpg" alt="casa-home">
+        <img class="casaName" src="images/Casa.png" alt="casa-home">
+        <hr class="casaDivider">
+        <img class="casaMonkey" src="images/casaReleaseMonkey.svg" alt="casa-home">
+        <div class="releaseHeading">CASA Release</div>
+        <div class="releaseHeading" contenteditable="true" id="releaseDate">Nov 15, 2021</div>
+        <input type="button" value="save my edits" onclick="sendEmail()" />
+      </div>
+    </div>
 </body>
 
 </html>
