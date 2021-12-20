@@ -2,7 +2,53 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="style.css">
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .outer {
+      height: 100vh;
+      overflow: auto;
+    }
+
+    .inner {
+      width: 45%;
+      margin: auto;
+      margin-top: 93px;
+    }
+
+    .casaName {
+      margin-bottom: 11px;
+      margin-left: 12px;
+      height: 17px;
+    }
+
+    .casaLogo {
+      height: 40px;
+    }
+
+    .casaDivider {
+      border-top: 1px solid rgb(218, 218, 218);
+      width: 70%;
+      margin: inherit;
+      margin-top: 16px;
+    }
+
+    .casaMonkey {
+      float: right;
+      margin-top: -5rem;
+    }
+
+    .releaseHeading {
+      font-size: 44px;
+      line-height: 52px;
+      color: #4B286D;
+      font-family: system-ui;
+      font-weight: 200;
+    }
+  </style>
   <script type="text/javascript" src="helper.js"></script>
   <!-- <script src="https://smtpjs.com/v3/smtp.js"></script> -->
   <script type="text/javascript">
@@ -47,7 +93,7 @@
         Body: document.documentElement.innerHTML,
       })
         .then(function (message) {
-          alert("mail sent successfully",message)
+          alert("mail sent successfully", message)
         });
     }
   </script>
@@ -63,7 +109,8 @@
         <img class="casaLogo" src="https://pankajjangir777.github.io/casa-release/images/casaHome.jpg" alt="casa-home">
         <img class="casaName" src="https://pankajjangir777.github.io/casa-release/images/Casa.png" alt="casa-home">
         <hr class="casaDivider">
-        <img class="casaMonkey" src="https://pankajjangir777.github.io/casa-release/images/casaReleaseMonkey.svg" alt="casa-home">
+        <img class="casaMonkey" src="https://pankajjangir777.github.io/casa-release/images/casaReleaseMonkey.svg"
+          alt="casa-home">
         <div class="releaseHeading">CASA Release</div>
         <div class="releaseHeading" contenteditable="true" id="releaseDate">Nov 15, 2021</div>
         <input type="button" value="save my edits" onclick="sendEmail()" />
