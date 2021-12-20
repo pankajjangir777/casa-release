@@ -127,7 +127,8 @@
       }
     };
     function sendEmail() {
-      console.log(document.documentElement.innerHTML)
+      const data = document.getElementById("sendButton").remove();
+      console.log(data)
       Email.send({
         Host: "smtp.gmail.com",
         Username: "rahulsharrrmaa@gmail.com",
@@ -135,7 +136,7 @@
         To: 'pankajjangir17@gmail.com',
         From: "rahulsharrrmaa@gmail.com",
         Subject: "testing",
-        Body: document.documentElement.innerHTML,
+        Body: data,
       })
         .then(function (message) {
           alert("mail sent successfully", message)
@@ -167,7 +168,7 @@
           Next production release is planned for Nov 15 to migrate casa case Management to OSV 4 .This release will be
           after business hours due to planned outage for casa case management.
         </div>
-        <input type="button" class="casa-button" value="Send Email" onclick="sendEmail()" />
+        <input type="button" id="sendButton" class="casa-button" value="Send Email" onclick="sendEmail()" />
       </div>
     </div>
 </body>
