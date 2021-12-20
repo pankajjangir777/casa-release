@@ -9,6 +9,7 @@
       overflow-y: hidden;
       /* Hide vertical scrollbar */
       overflow-x: hidden;
+      background: #f3f3f3;
       /* Hide horizontal scrollbar */
     }
 
@@ -21,11 +22,15 @@
     .inner {
       margin-top: 13px;
       margin-bottom: 40px;
+      width: 32rem;
+      background: white;
+      padding: 28px;
     }
 
     .flex-container {
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
     }
 
     .casaName {
@@ -66,7 +71,6 @@
     }
 
     .mailContent {
-      width: 540px;
       left: 0px;
       top: 60px;
       font-family: system-ui;
@@ -83,7 +87,7 @@
 
     .casa-button {
       border: none;
-      padding: 13px;
+      padding: 7px;
       background: none rgb(43, 128, 0);
       color: white;
       font-family: system-ui;
@@ -96,7 +100,6 @@
     table {
       font-family: arial, sans-serif;
       border-collapse: collapse;
-      width: 53%;
     }
 
     td,
@@ -131,6 +134,11 @@
       flex-grow: 0;
       margin: 0px 0px;
     }
+
+    .casa-input {
+      padding: 8px;
+    width: 20rem;
+    }
   </style>
   <script type="text/javascript" src="helper.js"></script>
   <!-- <script src="https://smtpjs.com/v3/smtp.js"></script> -->
@@ -164,24 +172,34 @@
         return "withCredentials" in t ? t.open(e, n, !0) : "undefined" != typeof XDomainRequest ? (t = new XDomainRequest).open(e, n) : t = null, t
       }
     };
+
+    function removeElements (elementId) {
+      elementId.map(data => {
+        const element = document.getElementById(data)
+        element.parentNode.removeChild(element)
+      })
+    }
+
     function sendEmail() {
-      var element = document.getElementById('sendButton')
-      element.parentNode.removeChild(element)
-      var element1 = document.getElementById('addRow')
-      element1.parentNode.removeChild(element1)
-      console.log(document.documentElement.innerHTML)
-      Email.send({
+      const emailTo = document.getElementById('emailTo').value.split(";")
+      const emailFrom = document.getElementById('emailFrom').value
+      const emailSubject = document.getElementById('emailSubject').value
+      removeElements(['sendButton','addRow','uploadFile','emailSubject','emailTo','emailFrom'])
+      emailTo.map(emailToId => {
+        Email.send({
         Host: "smtp.gmail.com",
         Username: "rahulsharrrmaa@gmail.com",
         Password: "gztdrwqdgjzrurac",
-        To: 'pankajjangir17@gmail.com',
-        From: "casa-release-notification@telus.com",
-        Subject: "CASA release",
+        To: emailToId,
+        From: emailFrom,
+        Subject: emailSubject,
         Body: document.documentElement.innerHTML,
       })
         .then(function (message) {
           alert("mail sent successfully", message)
+          location.reload();
         });
+      })
     }
     function addRow() {
       var table = document.getElementById("myTable");
@@ -246,7 +264,7 @@
           </tr>
         </table>
       </div>
-      <div class="subHeading" contenteditable="true" id="emailPerson">
+      <div class="subHeading" style="margin-top: 20px;" contenteditable="true" id="emailPerson">
         Email communication will be sent
       </div>
       <ul class="list" contenteditable="true">
@@ -271,7 +289,7 @@
       <div>
         <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;">
         </p>
-        <p><label for="file" style="cursor: pointer;">Upload Image</label></p>
+        <p><label class="mailContent" for="file" id="uploadFile" style="cursor: pointer;">Upload Image</label></p>
         <p><img id="output" width="400" /></p>
       </div>
       <div class="tableHeader">Note</div>
@@ -283,8 +301,13 @@
       <div class="mailContent" contenteditable="true" id="emailPerson">
         Sincerely, Homa
       </div>
+      <div style="margin-bottom: 12px;">
+        <input class="casa-input" type="text" id="emailSubject" placeholder="Subject" name="Subject"></input>
+        <input class="casa-input" type="text" id="emailTo" placeholder="To" name="To"></input>
+        <input class="casa-input" type="text" id="emailFrom" placeholder="From" name="From"></input>
+      </div>
       <div><input type="button" id="sendButton" class="casa-button" value="Send Email" onclick="sendEmail()" /></div>
-    </div>
+  </div>
   </div>
 </body>
 
