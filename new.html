@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .row {
+      display: flex;
+    }
+
+    .header {
+      background-color: #9933cc;
+      color: #ffffff;
+      padding: 15px;
+    }
+
+    /* For desktop: */
+    .col-1 {
+      width: 20rem;
+    }
+
+    .col-2 {
+      width: 17rem;
+    }
+
+    .col-3 {
+      width: 35rem;
+    }
+
+    @media screen and (max-width: 540px) {
+
+      /* For mobile phones: */
+      .col-1 {
+        width: 100%;
+      }
+
+      .col-2 {
+        width: 100%;
+      }
+
+      .col-3 {
+        width: 100%;
+      }
+
+      .row {
+        display: block;
+      }
+    }
+
+    /* .casaName {
+      margin-bottom: 11px;margin-left: 12px;height: 17px;
+    } */
+
+    .casaDivider {
+      border-top: 1px solid rgb(218, 218, 218);
+      margin: inherit;
+      margin-top: 16px;
+    }
+
+    .releaseHeading {
+      font-size: 44px;
+      line-height: 52px;
+      color: #4B286D;
+      font-family: system-ui;
+      font-weight: 200;
+    }
+
+    .subHeading {
+      font-size: 28px;
+      line-height: 52px;
+      color: #4B286D;
+      font-family: system-ui;
+      font-weight: 200;
+      letter-spacing: 1.1px;
+    }
+
+    .mailContent {
+      left: 0px;
+      top: 60px;
+      font-family: system-ui;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.61px;
+      color: #2A2C2E;
+      flex: none;
+      order: 1;
+      flex-grow: 0;
+      margin: 24px 0px;
+      font-weight: 300;
+    }
+
+    .casa-button {
+      border: none;
+      padding: 7px;
+      background: none rgb(43, 128, 0);
+      color: white;
+      font-family: system-ui;
+      font-weight: 300;
+      border-radius: 4px;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      text-align: left;
+      padding: 8px;
+      border: none;
+      border-bottom: 1px solid #dddddd !important;
+    }
+
+    .list {
+      font-family: system-ui;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.61px;
+      color: #2A2C2E;
+      font-weight: 300;
+    }
+
+    .tableHeader {
+      left: 0%;
+      right: 0%;
+      top: 0%;
+      bottom: 54.55%;
+      font-family: system-ui;
+      font-size: 16px;
+      line-height: 20px;
+      letter-spacing: 0.1px;
+      color: #2A2C2E;
+      flex: none;
+      order: 0;
+      flex-grow: 0;
+      margin: 0px 0px;
+    }
+
+    .casa-input {
+      padding: 8px;
+      width: 20rem;
+    }
+
+    i:hover {
+      cursor: pointer;
+    }
+  </style>
+  <script type="text/javascript">
+    function removeElements(elementId) {
+      elementId.map(data => {
+        const element = document.getElementById(data)
+        element.parentNode.removeChild(element)
+      })
+    }
+
+    function sendEmail() {
+      const emailTo = document.getElementById('emailTo').value.split(";")
+      const emailFrom = document.getElementById('emailFrom').value
+      const emailSubject = document.getElementById('emailSubject').value
+      removeElements([
+        'sendButton',
+        'addRow',
+        'uploadFile',
+        'uploadFile1',
+        'emailSubject',
+        'emailTo',
+        'emailFrom',
+        'file',
+        'file1',
+        'deleteRow'
+      ])
+      Email.send({
+        Host: "smtp.gmail.com",
+        Username: "rahulsharrrmaa@gmail.com",
+        Password: "gztdrwqdgjzrurac",
+        To: emailTo,
+        From: emailFrom,
+        Subject: emailSubject,
+        Body: document.documentElement.innerHTML,
+      })
+        .then(function (message) {
+          alert("mail sent successfully", message)
+          location.reload();
+        });
+    }
+
+    function date2str(x, y) {
+      var z = {
+        M: x.getMonth() + 1,
+        d: x.getDate(),
+        h: x.getHours(),
+        m: x.getMinutes(),
+        s: x.getSeconds()
+      };
+      y = y.replace(/(M+|d+|h+|m+|s+)/g, function (v) {
+        return ((v.length > 1 ? "0" : "") + z[v.slice(-1)]).slice(-2)
+      });
+
+      return y.replace(/(y+)/g, function (v) {
+        return x.getFullYear().toString().slice(-v.length)
+      });
+    }
+
+    function upTo(el, tagName) {
+      tagName = tagName.toLowerCase();
+      while (el && el.parentNode) {
+        el = el.parentNode;
+        if (el.tagName && el.tagName.toLowerCase() == tagName) {
+          return el;
+        }
+      }
+      return null;
+    }
+
+    function deleteRow(el) {
+      var row = upTo(el, 'tr')
+      if (row) row.parentNode.removeChild(row);
+    }
+
+    function addRow() {
+      var table = document.getElementById("myTable");
+      var row = table.insertRow(-1);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+      var cell5 = row.insertCell(4);
+      cell1.innerHTML = "Stage ";
+      cell2.innerHTML = "Not Started";
+      cell3.innerHTML = moment().format("ddd, MMM DD YYYY, h:mm A");
+      cell4.innerHTML = moment().format("ddd, MMM DD YYYY, h:mm A");
+      cell5.innerHTML = `<i id="deleteRow" onclick="deleteRow(this)" class="fa fa-trash"></i>`;
+    }
+
+    function encodeImageFileAsURL(element, idNumber) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        // console.log(reader.result)
+        document.getElementById(`uploadImage_${idNumber}`).src = reader.result;
+        document.getElementById(`uploadImage_${idNumber}`).style.height = '257px';
+      });
+      reader.readAsDataURL(element.files[0])
+    }
+  </script>
+</head>
+
+<body>
+  <div>
+    <div class="row">
+      <div class="col-1">
+        <img style="height: 40px; width: 40px;" class="casaLogo"
+          src="https://pankajjangir777.github.io/casa-release/images/Vector.png" alt="casa-home">
+        <img style="margin-bottom: 11px;margin-left: 12px;height: 17px;"
+          src="https://pankajjangir777.github.io/casa-release/images/Casa.png" alt="casa-home">
+        <hr class="casaDivider">
+        <div class="releaseHeading">CASA Release</div>
+        <div class="releaseHeading" contenteditable="true" id="releaseDate">Nov 15, 2021</div>
+      </div>
+      <div class="col-2">
+        <p>
+          <img style="height: 160px;"
+            src="https://pankajjangir777.github.io/casa-release/images/Monkey_watering_Plant_m.png" alt="casa-home">
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <div class="subHeading" contenteditable="true" id="emailPerson">
+          Hi Darrell Wong,
+        </div>
+        <div class="mailContent" contenteditable="true" id="emailPerson">
+          Next production release is planned for Nov 15 to migrate casa case Management to OSV 4 .This release will be
+          after business hours due to planned outage for casa case management.
+        </div>
+        <div>
+          <button class="casa-button" id="addRow" type="button" onclick="addRow()">Add Row</button>
+          <table contenteditable="true" id="myTable">
+            <tr class="no-bottom-border">
+              <th>Milestone</th>
+              <th>Status</th>
+              <th>Start Time (PT)</th>
+              <th>End Time (PT)</th>
+            </tr>
+            <tr>
+              <td>Stage 1</td>
+              <td>Not Started</td>
+              <td>Mon Nov 15, 2021 8:00 PM</td>
+              <td>Mon Nov 15, 2021 8:00 PM</td>
+            </tr>
+          </table>
+        </div>
+        <div class="subHeading" style="margin-top: 20px;" contenteditable="true" id="emailPerson">
+          Email communication will be sent
+        </div>
+        <ul class="list" contenteditable="true">
+          <li>Email will be sent at 8:00 PM (PST) when we start</li>
+          <li>Email will be sent at 5:30 AM (PST) when we finish</li>
+          <li>Email will be sent during the release if roll back required</li>
+        </ul>
+        <div class="subHeading" contenteditable="true" id="emailPerson">
+          Communication channels
+        </div>
+        <ul class="list" contenteditable="true">
+          <li>Google meethttps://meet.google.com/tov-jday-jtr ( during release )</li>
+          <li>Slack casa_pr_deployment #casa_pr_deployment</li>
+          <li>Google war room[WAR Room] Casa technology team –launch support</li>
+        </ul>
+        <div class="subHeading" contenteditable="true" id="emailPerson">
+          During casa case management outage
+        </div>
+        <div class="mailContent" contenteditable="true" id="emailPerson">
+          Following message will be displayed in casa UI :
+        </div>
+        <div>
+          <input type="file" accept="image/*" name="image" id="file" onchange="encodeImageFileAsURL(this,'0')"
+            style="display: none;">
+          <label class="mailContent" for="file" id="uploadFile" style="cursor: pointer;">Upload Image</label>
+          <img id="uploadImage_0">
+          <input type="file" accept="image/*" name="image" id="file1" onchange="encodeImageFileAsURL(this,'1')"
+            style="display: none;">
+          <label class="mailContent" for="file1" id="uploadFile1" style="cursor: pointer;">Upload Image</label>
+          <img id="uploadImage_1">
+        </div>
+        <div>
+        </div>
+        <div class="tableHeader">Note</div>
+        <div class="mailContent" contenteditable="true" id="emailPerson">
+          Please see the Casa Migration Plan document for more details
+        </div>
+        <div class="mailContent" contenteditable="true" id="emailPerson">
+        </div>
+        <div class="mailContent" contenteditable="true" id="emailPerson">
+          Sincerely, Homa
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-bottom: 12px;">
+    <input class="casa-input" type="text" id="emailSubject" placeholder="Subject" name="Subject"></input>
+    <input class="casa-input" type="text" id="emailTo" placeholder="To" name="To"></input>
+    <input class="casa-input" type="text" id="emailFrom" placeholder="From" name="From"></input>
+  </div>
+  <div><input type="button" id="sendButton" class="casa-button" value="Send Email" onclick="sendEmail()" /></div>
+</body>
+
+</html>

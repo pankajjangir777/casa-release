@@ -4,19 +4,17 @@
 <head>
   <!-- <link rel="stylesheet" href="style.css"> -->
   <style>
-    body {
+    /* body {
       margin: 0;
       overflow-y: hidden;
-      /* Hide vertical scrollbar */
       overflow-x: hidden;
       background: #f3f3f3;
-      /* Hide horizontal scrollbar */
-    }
+    } */
 
     .outer {
       height: 100vh;
       overflow: auto;
-      margin-left: 5rem;
+      /* margin-left: 5rem; */
     }
 
     .inner {
@@ -40,7 +38,7 @@
     }
 
     .casaLogo {
-      height: 40px;
+      height: 40px !important;
     }
 
     .casaDivider {
@@ -137,11 +135,9 @@
 
     .casa-input {
       padding: 8px;
-    width: 20rem;
+      width: 20rem;
     }
   </style>
-  <script type="text/javascript" src="helper.js"></script>
-  <!-- <script src="https://smtpjs.com/v3/smtp.js"></script> -->
   <script type="text/javascript">
     var Email = {
       send: function (a) {
@@ -173,7 +169,7 @@
       }
     };
 
-    function removeElements (elementId) {
+    function removeElements(elementId) {
       elementId.map(data => {
         const element = document.getElementById(data)
         element.parentNode.removeChild(element)
@@ -184,21 +180,32 @@
       const emailTo = document.getElementById('emailTo').value.split(";")
       const emailFrom = document.getElementById('emailFrom').value
       const emailSubject = document.getElementById('emailSubject').value
-      removeElements(['sendButton','addRow','uploadFile','emailSubject','emailTo','emailFrom'])
+      removeElements([
+        'sendButton',
+        'addRow',
+        'uploadFile',
+        'uploadFile1',
+        'emailSubject',
+        'emailTo',
+        'emailFrom',
+        'file',
+        'file1'
+      ])
+      console.log(document.documentElement.innerHTML)
       emailTo.map(emailToId => {
         Email.send({
-        Host: "smtp.gmail.com",
-        Username: "rahulsharrrmaa@gmail.com",
-        Password: "gztdrwqdgjzrurac",
-        To: emailToId,
-        From: emailFrom,
-        Subject: emailSubject,
-        Body: document.documentElement.innerHTML,
-      })
-        .then(function (message) {
-          alert("mail sent successfully", message)
-          location.reload();
-        });
+          Host: "smtp.gmail.com",
+          Username: "rahulsharrrmaa@gmail.com",
+          Password: "gztdrwqdgjzrurac",
+          To: emailToId,
+          From: emailFrom,
+          Subject: emailSubject,
+          Body: document.documentElement.innerHTML,
+        })
+          .then(function (message) {
+            alert("mail sent successfully", message)
+            location.reload();
+          });
       })
     }
     function addRow() {
@@ -214,13 +221,16 @@
       cell4.innerHTML = "Add here...";
     }
 
-    var loadFile = function (event) {
-      var image = document.getElementById('output');
-      image.src = URL.createObjectURL(event.target.files[0]);
-    };
+    function encodeImageFileAsURL(element, idNumber) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        // console.log(reader.result)
+        document.getElementById(`uploadImage_${idNumber}`).src = reader.result;
+        document.getElementById(`uploadImage_${idNumber}`).style.height = '257px';
+      });
+      reader.readAsDataURL(element.files[0])
+    }
   </script>
-  <link href="//db.onlinewebfonts.com/c/e65fda9e567e2bb65eafa8c223d013df?family=HelveticaNeueLT+Std+UltLt+Cn"
-    rel="stylesheet" type="text/css" />
   <title>CASA Release</title>
 </head>
 
@@ -229,7 +239,7 @@
     <div class="inner">
       <div class="flex-container">
         <div>
-          <img class="casaLogo" src="https://pankajjangir777.github.io/casa-release/images/casaHome.jpg"
+          <img class="casaLogo" src="https://pankajjangir777.github.io/casa-release/images/Vector.png"
             alt="casa-home">
           <img class="casaName" src="https://pankajjangir777.github.io/casa-release/images/Casa.png" alt="casa-home">
           <hr class="casaDivider">
@@ -287,10 +297,16 @@
         Following message will be displayed in casa UI :
       </div>
       <div>
-        <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;">
-        </p>
-        <p><label class="mailContent" for="file" id="uploadFile" style="cursor: pointer;">Upload Image</label></p>
-        <p><img id="output" width="400" /></p>
+        <input type="file" accept="image/*" name="image" id="file" onchange="encodeImageFileAsURL(this,'0')"
+          style="display: none;">
+        <label class="mailContent" for="file" id="uploadFile" style="cursor: pointer;">Upload Image</label>
+        <img id="uploadImage_0">
+        <input type="file" accept="image/*" name="image" id="file1" onchange="encodeImageFileAsURL(this,'1')"
+          style="display: none;">
+        <label class="mailContent" for="file1" id="uploadFile1" style="cursor: pointer;">Upload Image</label>
+        <img id="uploadImage_1">
+      </div>
+      <div>
       </div>
       <div class="tableHeader">Note</div>
       <div class="mailContent" contenteditable="true" id="emailPerson">
@@ -307,7 +323,7 @@
         <input class="casa-input" type="text" id="emailFrom" placeholder="From" name="From"></input>
       </div>
       <div><input type="button" id="sendButton" class="casa-button" value="Send Email" onclick="sendEmail()" /></div>
-  </div>
+    </div>
   </div>
 </body>
 
